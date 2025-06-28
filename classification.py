@@ -30,3 +30,23 @@ model = RandomForestClassifier()  # Create a Random Forest classifier instance
 model.fit(df.iloc[:,:-1], df['species'])  # Train the model using all features except the last column (species)
 # df.iloc[:,:-1] selects all rows and all columns except the last one (features only)
 # df['species'] provides the target labels for training
+
+st.sidebar.title("Input Features")  # Add a sidebar title
+
+# Create a slider for each feature to select the range of values
+sepal_length = st.sidebar.slider("Sepal Length", float(df['sepal length (cm)'].min()), float(df['sepal length (cm)'].max()), float(df['sepal length (cm)'].mean()))
+sepal_width = st.sidebar.slider("Sepal Width", float(df['sepal width (cm)'].min()), float(df['sepal width (cm)'].max()), float(df['sepal width (cm)'].mean()))
+petal_length = st.sidebar.slider("Petal Length", float(df['petal length (cm)'].min()), float(df['petal length (cm)'].max()), float(df['petal length (cm)'].mean()))
+petal_width = st.sidebar.slider("Petal Width", float(df['petal width (cm)'].min()), float(df['petal width (cm)'].max()), float(df['petal width (cm)'].mean()))
+
+
+input_data = [[sepal_length, sepal_width, petal_length, petal_width]] 
+
+# prediction  
+prediction = model.predict(input_data)
+print(prediction)
+predicted_species = target_names[prediction[0]]
+
+# Output the prediction
+st.write("Prediction")
+st.write(f"The predicted species is: {predicted_species}")
